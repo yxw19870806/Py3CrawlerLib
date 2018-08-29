@@ -31,7 +31,7 @@ WRITE_FILE_TYPE_REPLACE = 2  # 覆盖写入文件
 BOM_SIGN = b'\xef\xbb\xbf'.decode()
 
 # 项目根目录
-PROJECT_ROOT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+PROJECT_ROOT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 # common目录
 PROJECT_COMMON_PATH = os.path.abspath(os.path.join(PROJECT_ROOT_PATH, "common"))
 # config.ini路径
