@@ -31,11 +31,11 @@ WRITE_FILE_TYPE_REPLACE = 2  # 覆盖写入文件
 BOM_SIGN = b'\xef\xbb\xbf'.decode()
 
 # 项目根目录
-PROJECT_ROOT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+PROJECT_ROOT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 # common目录
-PROJECT_COMMON_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../common"))
+PROJECT_COMMON_PATH = os.path.abspath(os.path.join(PROJECT_ROOT_PATH, "common"))
 # config.ini路径
-PROJECT_CONFIG_PATH = os.path.abspath(os.path.join(PROJECT_COMMON_PATH, "config.ini"))
+PROJECT_CONFIG_PATH = os.path.abspath(os.path.join(PROJECT_ROOT_PATH, "common/config.ini"))
 # 应用程序（APP）根目录，下面包含多个应用
 PROJECT_APP_ROOT_PATH = os.path.abspath(os.path.join(PROJECT_ROOT_PATH, "project"))
 # 应用程序（APP）目录
