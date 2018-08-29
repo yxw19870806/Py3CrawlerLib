@@ -14,7 +14,7 @@ import time
 import threading
 import traceback
 import urllib3
-from common import output, path, tool
+from . import output, path, tool
 
 # https://www.python.org/dev/peps/pep-0476/
 # disable urllib3 HTTPS warning

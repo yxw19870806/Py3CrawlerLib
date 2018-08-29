@@ -10,7 +10,7 @@ import platform
 import sqlite3
 if platform.system() == "Windows":
     import win32crypt
-from common import output
+from . import output
 
 BROWSER_TYPE_IE = 1
 BROWSER_TYPE_FIREFOX = 2

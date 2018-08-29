@@ -13,7 +13,7 @@ import re
 import sys
 import threading
 import time
-from common import browser, keyboardEvent, log, net, output, path, portListenerEvent, tool
+from . import browser, keyboardEvent, log, net, output, path, portListenerEvent, tool
 
 # 程序是否支持下载图片功能（会判断配置中是否需要下载图片，如全部是则创建图片下载目录）
 SYS_DOWNLOAD_PHOTO = "download_photo"

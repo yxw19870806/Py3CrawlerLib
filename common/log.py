@@ -8,7 +8,7 @@ email: hikaru870806@hotmail.com
 import os
 import threading
 import time
-from common import output, tool
+from . import output, tool
 
 IS_SHOW_ERROR = True
 IS_SHOW_STEP = False

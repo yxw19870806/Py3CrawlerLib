@@ -11,7 +11,7 @@ import platform
 import random
 import string
 import sys
-from common import path
+from . import path
 
 # if sys.stdout.encoding != "UTF-8":
 #     raise Exception("项目编码必须是UTF-8，请在IDE中修改相关设置")
