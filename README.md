@@ -53,13 +53,14 @@ Visual Studio Installer安装完毕后，在工作负载标签下选择 'Visual 
 * /crawler.py  爬虫父类，多线程爬取父类，异常类<br>
 * /browser.py  浏览器类，获取操作系统中安装的浏览器目录以及保存的cookies<br>
 * /crypto.py  加密解密类，使用基于本计算机信息（MAC+计算机名）的私钥对隐私信息进行AES128加密（如输入的账号、密码）<br>
+* /file.py  文件操作类，读取/写入指定文件<br>
 * /keyboardEvent.py  键盘监听事件类，可以通过指定快捷键暂停/重启/立刻结束爬虫（默认在下一次网络请求时阻塞线程）<br>
 * /log.py  日志记录类，线程安全，4个级别（error、step、trace、notice）的日志记录方法<br>
 * /net.py  网络通信类（基于urllib3），网页访问、资源下载等<br>
 * /output.py  控制台输出类，线程安全<br>
 * /path.py  操作系统路径相关类，创建/删除目录，移动/复制文件或文件夹等操作<br>
 * /portListenerEvent.py  端口监听类，可以通过向指定端口发送请求暂停/重启/立刻结束爬虫（默认在下一次网络请求时阻塞线程）<br>
-* /tool.py  其他一些公共方法类，如读写文件，字符串截取，字符串和列表的转化等
+* /tool.py  其他一些公共方法类，如符串截取，字符串和列表的转化等
 2. /install，项目依赖的一些扩展包的安装文件（使用pip install）
 3. /processControl，爬虫监听端口发送指定命令
 
