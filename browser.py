@@ -9,7 +9,11 @@ import os
 import platform
 import sqlite3
 import win32crypt
-from . import output
+
+try:
+    from . import output
+except ImportError:
+    from common import output
 
 BROWSER_TYPE_IE = 1
 BROWSER_TYPE_FIREFOX = 2
@@ -80,7 +84,7 @@ def get_all_cookie_from_browser(browser_type, file_path):
     elif browser_type == 2:
         con = sqlite3.connect(os.path.join(file_path, "cookies.sqlite"))
         cur = con.cursor()
-        cur.execute("select host, path, name, value from moz_cookies")
+        cur.execute("SELECT host, path, name, value FROM moz_cookies")
         for cookie_info in cur.fetchall():
             cookie_domain = cookie_info[0]
             cookie_key = cookie_info[2]
@@ -95,7 +99,7 @@ def get_all_cookie_from_browser(browser_type, file_path):
             return None
         con = sqlite3.connect(os.path.join(file_path, "Cookies"))
         cur = con.cursor()
-        cur.execute("select host_key, path, name, value, encrypted_value from cookies")
+        cur.execute("SELECT host_key, path, name, value, encrypted_value FROM cookies")
         for cookie_info in cur.fetchall():
             cookie_domain = cookie_info[0]
             cookie_key = cookie_info[2]
