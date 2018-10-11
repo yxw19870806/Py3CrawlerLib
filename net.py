@@ -271,7 +271,7 @@ def http_request(url, method="GET", fields=None, binary_data=None, header_list=N
                         response.status = HTTP_RETURN_CODE_JSON_DECODE_ERROR
             elif response.status == 429:  # Too Many Requests
                 output.print_msg(url + " Too Many Requests, sleep")
-                time.sleep(30)
+                time.sleep(60)
                 continue
             elif response.status in [500, 502, 503, 504] and is_auto_retry:  # 服务器临时性错误，重试
                 if retry_count < NET_CONFIG["HTTP_REQUEST_RETRY_COUNT"]:
@@ -300,6 +300,7 @@ def http_request(url, method="GET", fields=None, binary_data=None, header_list=N
                                         encode_multipart=encode_multipart, json_decode=json_decode, is_auto_proxy=is_auto_proxy, is_auto_redirect=is_auto_redirect,
                                         is_gzip=False, is_url_encode=False, is_auto_retry=is_auto_retry, is_random_ip=is_random_ip,
                                         connection_timeout=connection_timeout, read_timeout=read_timeout)
+            # import traceback
             # output.print_msg(message)
             # output.print_msg(traceback.format_exc())
             output.print_msg(url + " 访问超时，重试中")
@@ -512,10 +513,12 @@ def save_net_file_list(file_url_list, file_path, header_list=None, cookies_list=
                     file_handle.write(response.data)
                 # 超过重试次数，直接退出
                 elif response.status == HTTP_RETURN_CODE_RETRY:
+                    file_handle.close()
                     path.delete_dir_or_file(file_path)
                     return {"status": 0, "code": -2}
                 # 其他http code，退出
                 else:
+                    file_handle.close()
                     path.delete_dir_or_file(file_path)
                     return {"status": 0, "code": response.status}
         return {"status": 1, "code": 0}
