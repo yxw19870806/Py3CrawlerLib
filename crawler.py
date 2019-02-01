@@ -467,11 +467,10 @@ def check_sub_key(needles, haystack):
 def is_integer(number):
     if isinstance(number, int):
         return True
-    elif isinstance(number, int):
-        return True
-    elif str(number).isdigit():
-        return True
-    return False
+    elif isinstance(number, bool) or isinstance(number, list) or isinstance(number, dict) or number is None:
+        return False
+    else:
+        return re.compile('^[-+]?[0-9]+$').match(str(number))
 
 
 # 替换文本中的表情符号
