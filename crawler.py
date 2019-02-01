@@ -451,6 +451,79 @@ def get_time():
     return time.strftime("%m-%d %H:%M:%S", time.localtime(time.time()))
 
 
+# 获取一个json文件的指定字段
+# arg如果是字母，取字典对应key；如果是整数，取列表对应下标
+# 支持的kwargs
+#       original_data
+#       default_value
+#       type_check
+#       value_check
+def get_json_value(json_data, *args, **kwargs):
+    if "original_data" is kwargs:
+        original_data = kwargs["original_data"]
+    else:
+        original_data = json_data
+    last_arg = ""
+    exception_string = ""
+    for arg in args:
+        if isinstance(arg, str):
+            if not isinstance(json_data, dict):
+                exception_string = "'%s'字段不是字典\n%s" % (last_arg, original_data)
+            elif arg not in json_data:
+                exception_string = "'%s'字段不存在\n%s" % (arg, original_data)
+        elif isinstance(arg, int):
+            if not isinstance(json_data, list):
+                exception_string =  "'%s'字段不是列表\n%s" % (last_arg, original_data)
+            elif len(json_data) <= arg:
+                exception_string = "'%s'字段长度不正确\n%s" % (last_arg, original_data)
+        else:
+            exception_string = "arg: %s类型不正确" % arg
+        if exception_string:
+            break
+        last_arg = arg
+        json_data = json_data[arg]
+    # 检测结果类型
+    if not exception_string and "type_check" in kwargs:
+        type_error = False
+        if kwargs["type_check"] is int:  # 整数（包含int和符合整型规则的字符串）
+            if is_integer(json_data):
+                json_data = int(json_data)
+            else:
+                type_error = True
+        elif kwargs["type_check"] is float:  # 浮点数（包含float、int和符合浮点数规则的字符串）
+            try:
+                json_data = float(json_data)
+            except TypeError:
+                type_error = True
+            except ValueError:
+                type_error = True
+        elif kwargs["type_check"] is str:  # 直接强制类型转化
+            json_data = str(json_data)
+        elif kwargs["type_check"] in [dict, list, bool]:  # 标准数据类型
+            type_error = not isinstance(json_data, kwargs["type_check"])
+        else:
+            exception_string = "type_check: %s类型不正确" % kwargs["type_check"]
+        if type_error:
+            exception_string = "'%s'字段类型不正确\n%s" % (last_arg, original_data)
+    # 检测结果数值
+    if not exception_string and "value_check" in kwargs:
+        value_error = False
+        if isinstance(kwargs["value_check"], list):
+            if json_data not in kwargs["value_check"]:
+                value_error = True
+        else:
+            if not (json_data is kwargs["value_check"]):
+                value_error = True
+        if value_error:
+            exception_string = "'%s'字段取值不正确\n%s" % (last_arg, original_data)
+    if exception_string:
+        if "default_value" in kwargs:
+            return kwargs["default_value"]
+        else:
+            raise CrawlerException(exception_string)
+    return json_data
+
+
 # 判断类型是否为字典，并且检测是否存在指定的key
 def check_sub_key(needles, haystack):
     if not isinstance(needles, tuple):
